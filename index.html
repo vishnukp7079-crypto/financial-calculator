@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FinGlass - All-in-One Financial & Scientific Calculators</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #e0eafc 0%, #cfdef3 50%, #e2d1c3 100%);
+      --glass-bg: rgba(255, 255, 255, 0.55);
+      --glass-border: rgba(255, 255, 255, 0.7);
+      --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.12);
+      --text-primary: #1a202c;
+      --text-secondary: #4a5568;
+      --accent: #00b386;
+      --accent-soft: rgba(0, 179, 134, 0.15);
+      --chart-invested: #e2e8f0;
+      --chart-return: #5367ff;
+      --ad-bg: rgba(255, 255, 255, 0.35);
+      --btn-calc-bg: rgba(255, 255, 255, 0.65);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #090d16 100%);
+        --glass-bg: rgba(30, 41, 59, 0.55);
+        --glass-border: rgba(255, 255, 255, 0.12);
+        --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+        --text-primary: #f8fafc;
+        --text-secondary: #94a3b8;
+        --accent: #00d09c;
+        --accent-soft: rgba(0, 208, 156, 0.18);
+        --chart-invested: #334155;
+        --chart-return: #6366f1;
+        --ad-bg: rgba(15, 23, 42, 0.45);
+        --btn-calc-bg: rgba(51, 65, 85, 0.6);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-height: 94vh;
+    }
+
+    /* Glass Card Base */
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      box-shadow: var(--glass-shadow);
+      padding: 20px;
+    }
+
+    /* Ad Banner Box */
+    .ad-slot {
+      width: 100%;
+      min-height: 65px;
+      background: var(--ad-bg);
+      backdrop-filter: blur(12px);
+      border: 1px dashed var(--glass-border);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: var(--text-secondary);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* Header */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 18px;
+      border-radius: 20px;
+    }
+
+    .brand-title {
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .back-btn {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid var(--glass-border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: none;
+    }
+
+    /* Layer Views */
+    .layer {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    .layer.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Round Icons Grid (Layer 1 & Layer 2) */
+    .section-heading {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .round-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px 14px;
+      justify-items: center;
+      padding: 8px 0;
+    }
+
+    .round-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      width: 125px;
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .round-item:active {
+      transform: scale(0.94);
+    }
+
+    .round-circle {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      border: 1.5px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      transition: all 0.2s ease;
+    }
+
+    .round-item:hover .round-circle {
+      border-color: var(--accent);
+      box-shadow: 0 0 20px var(--accent-soft);
+    }
+
+    .round-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+
+    /* Layer 3: Groww-style Financial Calculator UI */
+    .calc-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .tab-pill {
+      padding: 7px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-secondary);
+    }
+
+    .tab-pill.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .input-group {
+      margin-bottom: 22px;
+    }
+
+    .input-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .input-header label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .value-box {
+      display: flex;
+      align-items: center;
+      background: var(--accent-soft);
+      border-radius: 8px;
+      padding: 6px 12px;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 15px;
+      min-width: 110px;
+      justify-content: flex-end;
+    }
+
+    .value-box input {
+      background: transparent;
+      border: none;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 15px;
+      width: 75px;
+      text-align: right;
+      outline: none;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      height: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Result Breakdown & Donut Chart */
+    .result-card {
+      margin-top: 10px;
+      padding-top: 18px;
+      border-top: 1px solid var(--glass-border);
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .result-row span:first-child {
+      color: var(--text-secondary);
+    }
+
+    .result-row span:last-child {
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .chart-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .donut-chart {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      background: conic-gradient(var(--chart-return) 0% 50%, var(--chart-invested) 50% 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: background 0.3s ease;
+    }
+
+    .donut-hole {
+      width: 112px;
+      height: 112px;
+      border-radius: 50%;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+    }
+
+    .chart-legend {
+      display: flex;
+      gap: 20px;
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 6px;
+      border-radius: 4px;
+    }
+
+    /* Scientific & Normal Calculator UI */
+    .sci-display {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 16px;
+      text-align: right;
+      margin-bottom: 14px;
+    }
+
+    .sci-history {
+      font-size: 13px;
+      color: var(--text-secondary);
+      min-height: 18px;
+      margin-bottom: 4px;
+      overflow-x: auto;
+    }
+
+    .sci-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-align: right;
+      outline: none;
+    }
+
+    .sci-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .sci-btn {
+      padding: 14px 6px;
+      border-radius: 14px;
+      border: 1px solid var(--glass-border);
+      background: var(--btn-calc-bg);
+      color: var(--text-primary);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.1s ease, background 0.2s;
+    }
+
+    .sci-btn:active {
+      transform: scale(0.93);
+    }
+
+    .sci-btn.op {
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .sci-btn.eq {
+      background: var(--accent);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Top Header -->
+    <div class="glass-panel top-bar">
+      <div class="brand-title">
+        <span>💎</span>
+        <span id="headerTitle">FinGlass Hub</span>
+      </div>
+      <button class="back-btn" id="backBtn" onclick="goBack()">← वापस</button>
+    </div>
+
+    <!-- LAYER 1: HOME (8 Round Icons + Top & Bottom Ads) -->
+    <div id="layer1" class="layer active">
+      <!-- Top Ad (Shown in Layer 1) -->
+      <div class="ad-slot">विज्ञापन स्थान (Top Ad Banner - Layer 1)</div>
+
+      <div class="glass-panel">
+        <div class="section-heading">अपना कैलकुलेटर चुनें</div>
+        <div class="round-grid" id="layer1Grid"></div>
+      </div>
+
+      <!-- Bottom Ad (Shown in Layer 1) -->
+      <div class="ad-slot">विज्ञापन स्थान (Bottom Ad Banner - Layer 1)</div>
+    </div>
+
+    <!-- LAYER 2: SUB-CATEGORIES (Round Icons + Top & Bottom Ads) -->
+    <div id="layer2" class="layer">
+      <!-- Top Ad (Shown in Layer 2) -->
+      <div class="ad-slot">विज्ञापन स्थान (Top Ad Banner - Layer 2)</div>
+
+      <div class="glass-panel">
+        <div class="section-heading" id="layer2Heading">श्रेणी कैलकुलेटर</div>
+        <div class="round-grid" id="layer2Grid"></div>
+      </div>
+
+      <!-- Bottom Ad (Shown in Layer 2) -->
+      <div class="ad-slot">विज्ञापन स्थान (Bottom Ad Banner - Layer 2)</div>
+    </div>
+
+    <!-- LAYER 3: ACTUAL CALCULATOR (NO Top Ad, ONLY Bottom Ad) -->
+    <div id="layer3" class="layer">
+      <!-- NO TOP AD HERE AS REQUESTED -->
+
+      <!-- Financial Calculator Panel -->
+      <div class="glass-panel" id="finCalcContainer">
+        <div class="calc-tabs" id="calcModeTabs"></div>
+
+        <div class="input-group">
+          <div class="input-header">
+            <label id="lblInput1">Monthly investment</label>
+            <div class="value-box">
+              <span id="prefix1">₹</span>
+              <input type="number" id="numInput1" value="25000" oninput="syncSlider(1)" />
+            </div>
+          </div>
+          <input type="range" id="rangeInput1" min="500" max="100000" step="500" value="25000" oninput="syncNumber(1)" />
+        </div>
+
+        <div class="input-group">
+          <div class="input-header">
+            <label id="lblInput2">Expected return rate (p.a)</label>
+            <div class="value-box">
+              <input type="number" id="numInput2" value="12" step="0.5" oninput="syncSlider(2)" />
+              <span id="suffix2">%</span>
+            </div>
+          </div>
+          <input type="range" id="rangeInput2" min="1" max="30" step="0.5" value="12" oninput="syncNumber(2)" />
+        </div>
+
+        <div class="input-group">
+          <div class="input-header">
+            <label id="lblInput3">Time period</label>
+            <div class="value-box">
+              <input type="number" id="numInput3" value="10" oninput="syncSlider(3)" />
+              <span id="suffix3">Yr</span>
+            </div>
+          </div>
+          <input type="range" id="rangeInput3" min="1" max="40" step="1" value="10" oninput="syncNumber(3)" />
+        </div>
+
+        <div class="result-card">
+          <div class="result-row">
+            <span id="resLbl1">Invested amount</span>
+            <span id="resVal1">₹30,00,000</span>
+          </div>
+          <div class="result-row">
+            <span id="resLbl2">Est. returns</span>
+            <span id="resVal2">₹26,00,897</span>
+          </div>
+          <div class="result-row">
+            <span id="resLbl3">Total value</span>
+            <span id="resVal3">₹56,00,897</span>
+          </div>
+
+          <div class="chart-wrapper">
+            <div class="donut-chart" id="donutChart">
+              <div class="donut-hole"></div>
+            </div>
+            <div class="chart-legend">
+              <div class="legend-item">
+                <div class="legend-dot" style="background: var(--chart-invested);"></div>
+                <span id="legLbl1">Invested amount</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot" style="background: var(--chart-return);"></div>
+                <span id="legLbl2">Est. returns</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scientific & Normal Calculator Panel (8th Icon) -->
+      <div class="glass-panel" id="sciCalcContainer" style="display: none;">
+        <div class="sci-display">
+          <div class="sci-history" id="sciHistory"></div>
+          <input type="text" class="sci-input" id="sciScreen" value="0" readonly />
+        </div>
+        <div class="sci-grid">
+          <button class="sci-btn op" onclick="sciFunc('sin')">sin θ</button>
+          <button class="sci-btn op" onclick="sciFunc('cos')">cos θ</button>
+          <button class="sci-btn op" onclick="sciFunc('tan')">tan θ</button>
+          <button class="sci-btn op" onclick="sciClear()">AC</button>
+
+          <button class="sci-btn op" onclick="sciFunc('sqrt')">√</button>
+          <button class="sci-btn op" onclick="sciAppend('**')">xʸ</button>
+          <button class="sci-btn op" onclick="sciAppend('%')">%</button>
+          <button class="sci-btn op" onclick="sciBack()">⌫</button>
+
+          <button class="sci-btn" onclick="sciAppend('7')">7</button>
+          <button class="sci-btn" onclick="sciAppend('8')">8</button>
+          <button class="sci-btn" onclick="sciAppend('9')">9</button>
+          <button class="sci-btn op" onclick="sciAppend('/')">÷</button>
+
+          <button class="sci-btn" onclick="sciAppend('4')">4</button>
+          <button class="sci-btn" onclick="sciAppend('5')">5</button>
+          <button class="sci-btn" onclick="sciAppend('6')">6</button>
+          <button class="sci-btn op" onclick="sciAppend('*')">×</button>
+
+          <button class="sci-btn" onclick="sciAppend('1')">1</button>
+          <button class="sci-btn" onclick="sciAppend('2')">2</button>
+          <button class="sci-btn" onclick="sciAppend('3')">3</button>
+          <button class="sci-btn op" onclick="sciAppend('-')">−</button>
+
+          <button class="sci-btn" onclick="sciAppend('0')">0</button>
+          <button class="sci-btn" onclick="sciAppend('.')">.</button>
+          <button class="sci-btn eq" onclick="sciEval()">=</button>
+          <button class="sci-btn op" onclick="sciAppend('+')">+</button>
+        </div>
+      </div>
+
+      <!-- Bottom Ad ONLY in Layer 3 -->
+      <div class="ad-slot">विज्ञापन स्थान (Bottom Ad Banner Only - Layer 3)</div>
+    </div>
+  </div>
+
+  <script>
+    // Data Structure for 8 Categories in Layer 1
+    const categories = [
+      {
+        id: 'invest',
+        name: 'निवेश (Investment)',
+        icon: '📈',
+        items: [
+          { id: 'sip', name: 'SIP कैलकुलेटर', icon: '💰', type: 'sip' },
+          { id: 'lumpsum', name: 'Lumpsum कैलकुलेटर', icon: '🏦', type: 'lumpsum' },
+          { id: 'swp', name: 'SWP कैलकुलेटर', icon: '💸', type: 'swp' },
+          { id: 'stp', name: 'STP कैलकुलेटर', icon: '🔄', type: 'sip' },
+          { id: 'cagr', name: 'CAGR कैलकुलेटर', icon: '📊', type: 'lumpsum' },
+          { id: 'mf', name: 'Mutual Fund', icon: '🌱', type: 'sip' }
+        ]
+      },
+      {
+        id: 'loan',
+        name: 'लोन और EMI',
+        icon: '🏠',
+        items: [
+          { id: 'emi', name: 'EMI कैलकुलेटर', icon: '💳', type: 'emi' },
+          { id: 'homeloan', name: 'Home Loan EMI', icon: '🏡', type: 'emi' },
+          { id: 'carloan', name: 'Car / Bike Loan', icon: '🚗', type: 'emi' },
+          { id: 'personalloan', name: 'Personal Loan', icon: '👤', type: 'emi' }
+        ]
+      },
+      {
+        id: 'bank',
+        name: 'बैंक और बचत',
+        icon: '🏛️',
+        items: [
+          { id: 'fd', name: 'FD कैलकुलेटर', icon: '🔒', type: 'lumpsum' },
+          { id: 'rd', name: 'RD कैलकुलेटर', icon: '📅', type: 'sip' },
+          { id: 'ppf', name: 'PPF कैलकुलेटर', icon: '🛡️', type: 'sip' },
+          { id: 'ssy', name: 'सुकन्या समृद्धि', icon: '👧', type: 'sip' }
+        ]
+      },
+      {
+        id: 'interest',
+        name: 'ब्याज और महंगाई',
+        icon: '📉',
+        items: [
+          { id: 'ci', name: 'चक्रवृद्धि ब्याज', icon: '🚀', type: 'lumpsum' },
+          { id: 'si', name: 'साधारण ब्याज', icon: '➕', type: 'si' },
+          { id: 'inflation', name: 'Inflation (महंगाई)', icon: '🎈', type: 'lumpsum' }
+        ]
+      },
+      {
+        id: 'tax',
+        name: 'टैक्स और सैलरी',
+        icon: '🧾',
+        items: [
+          { id: 'gst', name: 'GST कैलकुलेटर', icon: '🏷️', type: 'gst' },
+          { id: 'incometax', name: 'Income Tax', icon: '💼', type: 'si' },
+          { id: 'hra', name: 'HRA कैलकुलेटर', icon: '🏢', type: 'si' }
+        ]
+      },
+      {
+        id: 'goal',
+        name: 'फ्यूचर प्लानिंग',
+        icon: '🎯',
+        items: [
+          { id: 'retirement', name: 'Retirement प्लान', icon: '👴', type: 'sip' },
+          { id: 'education', name: 'बच्चों की पढ़ाई', icon: '🎓', type: 'sip' },
+          { id: 'fire', name: 'FIRE कैलकुलेटर', icon: '🔥', type: 'sip' }
+        ]
+      },
+      {
+        id: 'trading',
+        name: 'ट्रेडिंग व बिज़नेस',
+        icon: '⚡',
+        items: [
+          { id: 'roi', name: 'ROI कैलकुलेटर', icon: '💹', type: 'lumpsum' },
+          { id: 'margin', name: 'Profit Margin', icon: '⚖️', type: 'gst' },
+          { id: 'brokerage', name: 'Brokerage / Tax', icon: '📑', type: 'gst' }
+        ]
+      },
+      {
+        id: 'normal_calc',
+        name: 'एडवांस कैलकुलेटर',
+        icon: '🧮',
+        isDirectSciCalc: true
+      }
+    ];
+
+    let currentLayer = 1;
+    let selectedCategory = null;
+    let currentCalcType = 'sip';
+
+    // Initialize Layer 1
+    function initLayer1() {
+      const grid = document.getElementById('layer1Grid');
+      grid.innerHTML = '';
+      categories.forEach(cat => {
+        const div = document.createElement('div');
+        div.className = 'round-item';
+        div.innerHTML = `
+          <div class="round-circle">${cat.icon}</div>
+          <div class="round-label">${cat.name}</div>
+        `;
+        div.onclick = () => openCategory(cat);
+        grid.appendChild(div);
+      });
+    }
+
+    function openCategory(cat) {
+      if (cat.isDirectSciCalc) {
+        selectedCategory = null;
+        openScientificCalc();
+        return;
+      }
+      selectedCategory = cat;
+      document.getElementById('layer2Heading').innerText = cat.name;
+      const grid = document.getElementById('layer2Grid');
+      grid.innerHTML = '';
+      cat.items.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'round-item';
+        div.innerHTML = `
+          <div class="round-circle">${item.icon}</div>
+          <div class="round-label">${item.name}</div>
+        `;
+        div.onclick = () => openCalculator(item);
+        grid.appendChild(div);
+      });
+      switchLayer(2, cat.name);
+    }
+
+    function openCalculator(item) {
+      document.getElementById('finCalcContainer').style.display = 'block';
+      document.getElementById('sciCalcContainer').style.display = 'none';
+      setupCalculatorMode(item.type, item.name);
+      switchLayer(3, item.name);
+    }
+
+    function openScientificCalc() {
+      document.getElementById('finCalcContainer').style.display = 'none';
+      document.getElementById('sciCalcContainer').style.display = 'block';
+      switchLayer(3, 'एडवांस कैलकुलेटर');
+    }
+
+    function switchLayer(layerNum, titleText) {
+      currentLayer = layerNum;
+      document.querySelectorAll('.layer').forEach(l => l.classList.remove('active'));
+      document.getElementById('layer' + layerNum).classList.add('active');
+      document.getElementById('headerTitle').innerText = titleText;
+      document.getElementById('backBtn').style.display = layerNum === 1 ? 'none' : 'inline-block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function goBack() {
+      if (currentLayer === 3) {
+        if (selectedCategory) {
+          switchLayer(2, selectedCategory.name);
+        } else {
+          switchLayer(1, 'FinGlass Hub');
+        }
+      } else if (currentLayer === 2) {
+        switchLayer(1, 'FinGlass Hub');
+      }
+    }
+
+    // Configure Calculator Inputs & Tabs (Groww Style)
+    function setupCalculatorMode(type, title) {
+      currentCalcType = type;
+      const tabsDiv = document.getElementById('calcModeTabs');
+      tabsDiv.innerHTML = '';
+
+      if (type === 'sip' || type === 'lumpsum') {
+        tabsDiv.innerHTML = `
+          <button class="tab-pill ${type === 'sip' ? 'active' : ''}" onclick="setupCalculatorMode('sip', '${title}')">SIP</button>
+          <button class="tab-pill ${type === 'lumpsum' ? 'active' : ''}" onclick="setupCalculatorMode('lumpsum', '${title}')">Lumpsum</button>
+        `;
+      } else {
+        tabsDiv.innerHTML = `<button class="tab-pill active">${title}</button>`;
+      }
+
+      if (type === 'sip') {
+        setInputs('Monthly investment', 25000, 500, 100000, 500, 'Expected return rate (p.a)', 12, 1, 30, 'Time period', 10, 1, 40);
+      } else if (type === 'lumpsum') {
+        setInputs('Total investment', 25000, 1000, 1000000, 1000, 'Expected return rate (p.a)', 12, 1, 30, 'Time period', 10, 1, 40);
+      } else if (type === 'emi') {
+        setInputs('Loan amount', 500000, 10000, 10000000, 10000, 'Rate of interest (p.a)', 9, 1, 25, 'Loan tenure', 5, 1, 30);
+      } else if (type === 'swp') {
+        setInputs('Total investment', 500000, 50000, 10000000, 10000, 'Withdrawal per month', 5000, 500, 100000, 'Time period', 10, 1, 30);
+      } else if (type === 'gst') {
+        setInputs('Initial Amount', 10000, 100, 500000, 100, 'GST / Margin Rate', 18, 1, 50, 'Quantity / Multiplier', 1, 1, 100);
+      } else {
+        setInputs('Principal Amount', 50000, 1000, 1000000, 1000, 'Annual Rate (%)', 8, 1, 25, 'Time period', 5, 1, 30);
+      }
+      calculateFinancials();
+    }
+
+    function setInputs(l1, v1, min1, max1, step1, l2, v2, min2, max2, l3, v3, min3, max3) {
+      document.getElementById('lblInput1').innerText = l1;
+      document.getElementById('numInput1').value = v1;
+      const r1 = document.getElementById('rangeInput1');
+      r1.min = min1; r1.max = max1; r1.step = step1; r1.value = v1;
+
+      document.getElementById('lblInput2').innerText = l2;
+      document.getElementById('numInput2').value = v2;
+      const r2 = document.getElementById('rangeInput2');
+      r2.min = min2; r2.max = max2; r2.value = v2;
+
+      document.getElementById('lblInput3').innerText = l3;
+      document.getElementById('numInput3').value = v3;
+      const r3 = document.getElementById('rangeInput3');
+      r3.min = min3; r3.max = max3; r3.value = v3;
+
+      document.getElementById('suffix2').innerText = currentCalcType === 'swp' ? '₹' : '%';
+      document.getElementById('suffix3').innerText = currentCalcType === 'gst' ? 'x' : 'Yr';
+    }
+
+    function syncSlider(idx) {
+      document.getElementById('rangeInput' + idx).value = document.getElementById('numInput' + idx).value;
+      calculateFinancials();
+    }
+
+    function syncNumber(idx) {
+      document.getElementById('numInput' + idx).value = document.getElementById('rangeInput' + idx).value;
+      calculateFinancials();
+    }
+
+    function formatINR(num) {
+      return '₹' + Math.round(num).toLocaleString('en-IN');
+    }
+
+    function calculateFinancials() {
+      const p = parseFloat(document.getElementById('numInput1').value) || 0;
+      const r = parseFloat(document.getElementById('numInput2').value) || 0;
+      const t = parseFloat(document.getElementById('numInput3').value) || 0;
+
+      let val1 = 0, val2 = 0, val3 = 0;
+
+      if (currentCalcType === 'sip') {
+        const i = r / 12 / 100;
+        const n = t * 12;
+        val1 = p * n;
+        val3 = i > 0 ? p * ((Math.pow(1 + i, n) - 1) / i) * (1 + i) : val1;
+        val2 = val3 - val1;
+        setResultLabels('Invested amount', 'Est. returns', 'Total value');
+      } else if (currentCalcType === 'lumpsum') {
+        val1 = p;
+        val3 = p * Math.pow(1 + r / 100, t);
+        val2 = val3 - val1;
+        setResultLabels('Invested amount', 'Est. returns', 'Total value');
+      } else if (currentCalcType === 'emi') {
+        const i = r / 12 / 100;
+        const n = t * 12;
+        const emi = i > 0 ? (p * i * Math.pow(1 + i, n)) / (Math.pow(1 + i, n) - 1) : p / n;
+        val1 = p;
+        val3 = emi * n;
+        val2 = val3 - val1;
+        setResultLabels('Principal amount', 'Total interest', 'Total payable (EMI: ' + formatINR(emi) + ')');
+      } else if (currentCalcType === 'swp') {
+        val1 = p;
+        val2 = r * t * 12;
+        val3 = Math.max(0, p * Math.pow(1.08, t) - val2);
+        setResultLabels('Total investment', 'Total withdrawal', 'Final value');
+      } else if (currentCalcType === 'gst') {
+        val1 = p * t;
+        val2 = (val1 * r) / 100;
+        val3 = val1 + val2;
+        setResultLabels('Net amount', 'Tax / Margin', 'Total amount');
+      } else {
+        val1 = p;
+        val2 = (p * r * t) / 100;
+        val3 = val1 + val2;
+        setResultLabels('Principal amount', 'Total interest', 'Total value');
+      }
+
+      document.getElementById('resVal1').innerText = formatINR(val1);
+      document.getElementById('resVal2').innerText = formatINR(val2);
+      document.getElementById('resVal3').innerText = formatINR(val3);
+
+      const total = val1 + Math.max(0, val2);
+      const returnPercent = total > 0 ? (Math.max(0, val2) / total) * 100 : 0;
+      document.getElementById('donutChart').style.background =
+        `conic-gradient(var(--chart-return) 0% ${returnPercent}%, var(--chart-invested) ${returnPercent}% 100%)`;
+    }
+
+    function setResultLabels(l1, l2, l3) {
+      document.getElementById('resLbl1').innerText = l1;
+      document.getElementById('resLbl2').innerText = l2;
+      document.getElementById('resLbl3').innerText = l3;
+      document.getElementById('legLbl1').innerText = l1;
+      document.getElementById('legLbl2').innerText = l2;
+    }
+
+    // Scientific & Normal Calculator Functions
+    let sciExpr = '';
+    function sciAppend(val) {
+      if (sciExpr === '0' && val !== '.') sciExpr = '';
+      sciExpr += val;
+      document.getElementById('sciScreen').value = sciExpr;
+    }
+
+    function sciClear() {
+      sciExpr = '';
+      document.getElementById('sciHistory').innerText = '';
+      document.getElementById('sciScreen').value = '0';
+    }
+
+    function sciBack() {
+      sciExpr = sciExpr.slice(0, -1);
+      document.getElementById('sciScreen').value = sciExpr || '0';
+    }
+
+    function sciFunc(fn) {
+      try {
+        const num = parseFloat(document.getElementById('sciScreen').value) || 0;
+        let res = 0;
+        const rad = (num * Math.PI) / 180; // Degree mode
+        if (fn === 'sin') res = Math.sin(rad);
+        if (fn === 'cos') res = Math.cos(rad);
+        if (fn === 'tan') res = Math.tan(rad);
+        if (fn === 'sqrt') res = Math.sqrt(num);
+        document.getElementById('sciHistory').innerText = `${fn}(${num})`;
+        sciExpr = String(Number(res.toFixed(6)));
+        document.getElementById('sciScreen').value = sciExpr;
+      } catch (e) {
+        document.getElementById('sciScreen').value = 'Error';
+      }
+    }
+
+    function sciEval() {
+      try {
+        document.getElementById('sciHistory').innerText = sciExpr;
+        const res = Function('"use strict";return (' + sciExpr + ')')();
+        sciExpr = String(Number(res.toFixed(6)));
+        document.getElementById('sciScreen').value = sciExpr;
+      } catch (e) {
+        document.getElementById('sciScreen').value = 'Error';
+        sciExpr = '';
+      }
+    }
+
+    initLayer1();
+  </script>
+</body>
+              </html>
