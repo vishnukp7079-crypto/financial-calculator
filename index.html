@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -250,7 +250,7 @@
       color: var(--accent);
       font-weight: 700;
       font-size: 15px;
-      min-width: 110px;
+      min-width: 120px;
       justify-content: flex-end;
     }
 
@@ -260,7 +260,7 @@
       color: var(--accent);
       font-weight: 700;
       font-size: 15px;
-      width: 75px;
+      width: 90px;
       text-align: right;
       outline: none;
     }
@@ -415,40 +415,36 @@
         <span>💎</span>
         <span id="headerTitle">FinGlass Hub</span>
       </div>
-      <button class="back-btn" id="backBtn" onclick="goBack()">← वापस</button>
+      <button class="back-btn" id="backBtn" onclick="goBack()">← Back</button>
     </div>
 
     <!-- LAYER 1: HOME (8 Round Icons + Top & Bottom Ads) -->
     <div id="layer1" class="layer active">
-      <!-- Top Ad (Shown in Layer 1) -->
-      <div class="ad-slot">विज्ञापन स्थान (Top Ad Banner - Layer 1)</div>
+      <div class="ad-slot">Advertisement (Top Ad Banner - Layer 1)</div>
 
       <div class="glass-panel">
-        <div class="section-heading">अपना कैलकुलेटर चुनें</div>
+        <div class="section-heading">Select Your Calculator</div>
         <div class="round-grid" id="layer1Grid"></div>
       </div>
 
-      <!-- Bottom Ad (Shown in Layer 1) -->
-      <div class="ad-slot">विज्ञापन स्थान (Bottom Ad Banner - Layer 1)</div>
+      <div class="ad-slot">Advertisement (Bottom Ad Banner - Layer 1)</div>
     </div>
 
     <!-- LAYER 2: SUB-CATEGORIES (Round Icons + Top & Bottom Ads) -->
     <div id="layer2" class="layer">
-      <!-- Top Ad (Shown in Layer 2) -->
-      <div class="ad-slot">विज्ञापन स्थान (Top Ad Banner - Layer 2)</div>
+      <div class="ad-slot">Advertisement (Top Ad Banner - Layer 2)</div>
 
       <div class="glass-panel">
-        <div class="section-heading" id="layer2Heading">श्रेणी कैलकुलेटर</div>
+        <div class="section-heading" id="layer2Heading">Category Calculators</div>
         <div class="round-grid" id="layer2Grid"></div>
       </div>
 
-      <!-- Bottom Ad (Shown in Layer 2) -->
-      <div class="ad-slot">विज्ञापन स्थान (Bottom Ad Banner - Layer 2)</div>
+      <div class="ad-slot">Advertisement (Bottom Ad Banner - Layer 2)</div>
     </div>
 
     <!-- LAYER 3: ACTUAL CALCULATOR (NO Top Ad, ONLY Bottom Ad) -->
     <div id="layer3" class="layer">
-      <!-- NO TOP AD HERE AS REQUESTED -->
+      <!-- NO TOP AD HERE -->
 
       <!-- Financial Calculator Panel -->
       <div class="glass-panel" id="finCalcContainer">
@@ -456,49 +452,49 @@
 
         <div class="input-group">
           <div class="input-header">
-            <label id="lblInput1">Monthly investment</label>
+            <label id="lblInput1">Monthly Investment</label>
             <div class="value-box">
               <span id="prefix1">₹</span>
               <input type="number" id="numInput1" value="25000" oninput="syncSlider(1)" />
             </div>
           </div>
-          <input type="range" id="rangeInput1" min="500" max="100000" step="500" value="25000" oninput="syncNumber(1)" />
+          <input type="range" id="rangeInput1" min="100" max="10000000" step="500" value="25000" oninput="syncNumber(1)" />
         </div>
 
         <div class="input-group">
           <div class="input-header">
-            <label id="lblInput2">Expected return rate (p.a)</label>
+            <label id="lblInput2">Expected Return Rate (p.a)</label>
             <div class="value-box">
               <input type="number" id="numInput2" value="12" step="0.5" oninput="syncSlider(2)" />
               <span id="suffix2">%</span>
             </div>
           </div>
-          <input type="range" id="rangeInput2" min="1" max="30" step="0.5" value="12" oninput="syncNumber(2)" />
+          <input type="range" id="rangeInput2" min="1" max="500" step="0.5" value="12" oninput="syncNumber(2)" />
         </div>
 
         <div class="input-group">
           <div class="input-header">
-            <label id="lblInput3">Time period</label>
+            <label id="lblInput3">Time Period</label>
             <div class="value-box">
               <input type="number" id="numInput3" value="10" oninput="syncSlider(3)" />
               <span id="suffix3">Yr</span>
             </div>
           </div>
-          <input type="range" id="rangeInput3" min="1" max="40" step="1" value="10" oninput="syncNumber(3)" />
+          <input type="range" id="rangeInput3" min="1" max="250" step="1" value="10" oninput="syncNumber(3)" />
         </div>
 
         <div class="result-card">
           <div class="result-row">
-            <span id="resLbl1">Invested amount</span>
+            <span id="resLbl1">Invested Amount</span>
             <span id="resVal1">₹30,00,000</span>
           </div>
           <div class="result-row">
-            <span id="resLbl2">Est. returns</span>
-            <span id="resVal2">₹26,00,897</span>
+            <span id="resLbl2">Est. Returns</span>
+            <span id="resVal2">₹28,08,477</span>
           </div>
           <div class="result-row">
-            <span id="resLbl3">Total value</span>
-            <span id="resVal3">₹56,00,897</span>
+            <span id="resLbl3">Total Value</span>
+            <span id="resVal3">₹58,08,477</span>
           </div>
 
           <div class="chart-wrapper">
@@ -508,11 +504,11 @@
             <div class="chart-legend">
               <div class="legend-item">
                 <div class="legend-dot" style="background: var(--chart-invested);"></div>
-                <span id="legLbl1">Invested amount</span>
+                <span id="legLbl1">Invested Amount</span>
               </div>
               <div class="legend-item">
                 <div class="legend-dot" style="background: var(--chart-return);"></div>
-                <span id="legLbl2">Est. returns</span>
+                <span id="legLbl2">Est. Returns</span>
               </div>
             </div>
           </div>
@@ -558,33 +554,32 @@
         </div>
       </div>
 
-      <!-- Bottom Ad ONLY in Layer 3 -->
-      <div class="ad-slot">विज्ञापन स्थान (Bottom Ad Banner Only - Layer 3)</div>
+      <div class="ad-slot">Advertisement (Bottom Ad Banner Only - Layer 3)</div>
     </div>
   </div>
 
   <script>
-    // Data Structure for 8 Categories in Layer 1
+    // Data Structure for 8 Categories in Layer 1 (English Names)
     const categories = [
       {
         id: 'invest',
-        name: 'निवेश (Investment)',
+        name: 'Investment',
         icon: '📈',
         items: [
-          { id: 'sip', name: 'SIP कैलकुलेटर', icon: '💰', type: 'sip' },
-          { id: 'lumpsum', name: 'Lumpsum कैलकुलेटर', icon: '🏦', type: 'lumpsum' },
-          { id: 'swp', name: 'SWP कैलकुलेटर', icon: '💸', type: 'swp' },
-          { id: 'stp', name: 'STP कैलकुलेटर', icon: '🔄', type: 'sip' },
-          { id: 'cagr', name: 'CAGR कैलकुलेटर', icon: '📊', type: 'lumpsum' },
+          { id: 'sip', name: 'SIP Calculator', icon: '💰', type: 'sip' },
+          { id: 'lumpsum', name: 'Lumpsum Calculator', icon: '🏦', type: 'lumpsum' },
+          { id: 'swp', name: 'SWP Calculator', icon: '💸', type: 'swp' },
+          { id: 'stp', name: 'STP Calculator', icon: '🔄', type: 'sip' },
+          { id: 'cagr', name: 'CAGR Calculator', icon: '📊', type: 'lumpsum' },
           { id: 'mf', name: 'Mutual Fund', icon: '🌱', type: 'sip' }
         ]
       },
       {
         id: 'loan',
-        name: 'लोन और EMI',
+        name: 'Loan & EMI',
         icon: '🏠',
         items: [
-          { id: 'emi', name: 'EMI कैलकुलेटर', icon: '💳', type: 'emi' },
+          { id: 'emi', name: 'EMI Calculator', icon: '💳', type: 'emi' },
           { id: 'homeloan', name: 'Home Loan EMI', icon: '🏡', type: 'emi' },
           { id: 'carloan', name: 'Car / Bike Loan', icon: '🚗', type: 'emi' },
           { id: 'personalloan', name: 'Personal Loan', icon: '👤', type: 'emi' }
@@ -592,58 +587,58 @@
       },
       {
         id: 'bank',
-        name: 'बैंक और बचत',
+        name: 'Banking & Savings',
         icon: '🏛️',
         items: [
-          { id: 'fd', name: 'FD कैलकुलेटर', icon: '🔒', type: 'lumpsum' },
-          { id: 'rd', name: 'RD कैलकुलेटर', icon: '📅', type: 'sip' },
-          { id: 'ppf', name: 'PPF कैलकुलेटर', icon: '🛡️', type: 'sip' },
-          { id: 'ssy', name: 'सुकन्या समृद्धि', icon: '👧', type: 'sip' }
+          { id: 'fd', name: 'FD Calculator', icon: '🔒', type: 'lumpsum' },
+          { id: 'rd', name: 'RD Calculator', icon: '📅', type: 'sip' },
+          { id: 'ppf', name: 'PPF Calculator', icon: '🛡️', type: 'sip' },
+          { id: 'ssy', name: 'Sukanya Samriddhi', icon: '👧', type: 'sip' }
         ]
       },
       {
         id: 'interest',
-        name: 'ब्याज और महंगाई',
+        name: 'Interest & Inflation',
         icon: '📉',
         items: [
-          { id: 'ci', name: 'चक्रवृद्धि ब्याज', icon: '🚀', type: 'lumpsum' },
-          { id: 'si', name: 'साधारण ब्याज', icon: '➕', type: 'si' },
-          { id: 'inflation', name: 'Inflation (महंगाई)', icon: '🎈', type: 'lumpsum' }
+          { id: 'ci', name: 'Compound Interest', icon: '🚀', type: 'lumpsum' },
+          { id: 'si', name: 'Simple Interest', icon: '➕', type: 'si' },
+          { id: 'inflation', name: 'Inflation Calculator', icon: '🎈', type: 'lumpsum' }
         ]
       },
       {
         id: 'tax',
-        name: 'टैक्स और सैलरी',
+        name: 'Tax & Salary',
         icon: '🧾',
         items: [
-          { id: 'gst', name: 'GST कैलकुलेटर', icon: '🏷️', type: 'gst' },
+          { id: 'gst', name: 'GST Calculator', icon: '🏷️', type: 'gst' },
           { id: 'incometax', name: 'Income Tax', icon: '💼', type: 'si' },
-          { id: 'hra', name: 'HRA कैलकुलेटर', icon: '🏢', type: 'si' }
+          { id: 'hra', name: 'HRA Calculator', icon: '🏢', type: 'si' }
         ]
       },
       {
         id: 'goal',
-        name: 'फ्यूचर प्लानिंग',
+        name: 'Future Planning',
         icon: '🎯',
         items: [
-          { id: 'retirement', name: 'Retirement प्लान', icon: '👴', type: 'sip' },
-          { id: 'education', name: 'बच्चों की पढ़ाई', icon: '🎓', type: 'sip' },
-          { id: 'fire', name: 'FIRE कैलकुलेटर', icon: '🔥', type: 'sip' }
+          { id: 'retirement', name: 'Retirement Plan', icon: '👴', type: 'sip' },
+          { id: 'education', name: 'Child Education', icon: '🎓', type: 'sip' },
+          { id: 'fire', name: 'FIRE Calculator', icon: '🔥', type: 'sip' }
         ]
       },
       {
         id: 'trading',
-        name: 'ट्रेडिंग व बिज़नेस',
+        name: 'Trading & Business',
         icon: '⚡',
         items: [
-          { id: 'roi', name: 'ROI कैलकुलेटर', icon: '💹', type: 'lumpsum' },
+          { id: 'roi', name: 'ROI Calculator', icon: '💹', type: 'lumpsum' },
           { id: 'margin', name: 'Profit Margin', icon: '⚖️', type: 'gst' },
           { id: 'brokerage', name: 'Brokerage / Tax', icon: '📑', type: 'gst' }
         ]
       },
       {
         id: 'normal_calc',
-        name: 'एडवांस कैलकुलेटर',
+        name: 'Advanced Calculator',
         icon: '🧮',
         isDirectSciCalc: true
       }
@@ -653,7 +648,6 @@
     let selectedCategory = null;
     let currentCalcType = 'sip';
 
-    // Initialize Layer 1
     function initLayer1() {
       const grid = document.getElementById('layer1Grid');
       grid.innerHTML = '';
@@ -702,7 +696,7 @@
     function openScientificCalc() {
       document.getElementById('finCalcContainer').style.display = 'none';
       document.getElementById('sciCalcContainer').style.display = 'block';
-      switchLayer(3, 'एडवांस कैलकुलेटर');
+      switchLayer(3, 'Advanced Calculator');
     }
 
     function switchLayer(layerNum, titleText) {
@@ -726,7 +720,7 @@
       }
     }
 
-    // Configure Calculator Inputs & Tabs (Groww Style)
+    // Configure Calculator Inputs with High Limits (Virtually Unlimited)
     function setupCalculatorMode(type, title) {
       currentCalcType = type;
       const tabsDiv = document.getElementById('calcModeTabs');
@@ -741,18 +735,19 @@
         tabsDiv.innerHTML = `<button class="tab-pill active">${title}</button>`;
       }
 
+      // High limits for virtually unlimited calculations
       if (type === 'sip') {
-        setInputs('Monthly investment', 25000, 500, 100000, 500, 'Expected return rate (p.a)', 12, 1, 30, 'Time period', 10, 1, 40);
+        setInputs('Monthly Investment', 25000, 100, 100000000, 500, 'Expected Return Rate (p.a)', 12, 0.5, 500, 'Time Period', 10, 1, 250);
       } else if (type === 'lumpsum') {
-        setInputs('Total investment', 25000, 1000, 1000000, 1000, 'Expected return rate (p.a)', 12, 1, 30, 'Time period', 10, 1, 40);
+        setInputs('Total Investment', 25000, 1000, 1000000000, 1000, 'Expected Return Rate (p.a)', 12, 0.5, 500, 'Time Period', 10, 1, 250);
       } else if (type === 'emi') {
-        setInputs('Loan amount', 500000, 10000, 10000000, 10000, 'Rate of interest (p.a)', 9, 1, 25, 'Loan tenure', 5, 1, 30);
+        setInputs('Loan Amount', 500000, 10000, 1000000000, 10000, 'Rate of Interest (p.a)', 9, 0.5, 100, 'Loan Tenure', 5, 1, 100);
       } else if (type === 'swp') {
-        setInputs('Total investment', 500000, 50000, 10000000, 10000, 'Withdrawal per month', 5000, 500, 100000, 'Time period', 10, 1, 30);
+        setInputs('Total Investment', 500000, 50000, 1000000000, 10000, 'Withdrawal per Month', 5000, 500, 1000000, 'Time Period', 10, 1, 100);
       } else if (type === 'gst') {
-        setInputs('Initial Amount', 10000, 100, 500000, 100, 'GST / Margin Rate', 18, 1, 50, 'Quantity / Multiplier', 1, 1, 100);
+        setInputs('Initial Amount', 10000, 100, 100000000, 100, 'GST / Margin Rate', 18, 0.5, 500, 'Quantity / Multiplier', 1, 1, 1000);
       } else {
-        setInputs('Principal Amount', 50000, 1000, 1000000, 1000, 'Annual Rate (%)', 8, 1, 25, 'Time period', 5, 1, 30);
+        setInputs('Principal Amount', 50000, 1000, 1000000000, 1000, 'Annual Rate (%)', 8, 0.5, 500, 'Time Period', 5, 1, 250);
       }
       calculateFinancials();
     }
@@ -766,19 +761,23 @@
       document.getElementById('lblInput2').innerText = l2;
       document.getElementById('numInput2').value = v2;
       const r2 = document.getElementById('rangeInput2');
-      r2.min = min2; r2.max = max2; r2.value = v2;
+      r2.min = min2; r2.max = max2; r2.step = 0.5; r2.value = v2;
 
       document.getElementById('lblInput3').innerText = l3;
       document.getElementById('numInput3').value = v3;
       const r3 = document.getElementById('rangeInput3');
-      r3.min = min3; r3.max = max3; r3.value = v3;
+      r3.min = min3; r3.max = max3; r3.step = 1; r3.value = v3;
 
       document.getElementById('suffix2').innerText = currentCalcType === 'swp' ? '₹' : '%';
       document.getElementById('suffix3').innerText = currentCalcType === 'gst' ? 'x' : 'Yr';
     }
 
     function syncSlider(idx) {
-      document.getElementById('rangeInput' + idx).value = document.getElementById('numInput' + idx).value;
+      const val = parseFloat(document.getElementById('numInput' + idx).value) || 0;
+      const slider = document.getElementById('rangeInput' + idx);
+      if (val <= parseFloat(slider.max)) {
+        slider.value = val;
+      }
       calculateFinancials();
     }
 
@@ -788,6 +787,7 @@
     }
 
     function formatINR(num) {
+      if (isNaN(num) || !isFinite(num)) return '₹0';
       return '₹' + Math.round(num).toLocaleString('en-IN');
     }
 
@@ -803,36 +803,36 @@
         const n = t * 12;
         val1 = p * n;
         val3 = i > 0 ? p * ((Math.pow(1 + i, n) - 1) / i) * (1 + i) : val1;
-        val2 = val3 - val1;
-        setResultLabels('Invested amount', 'Est. returns', 'Total value');
+        val2 = Math.max(0, val3 - val1);
+        setResultLabels('Invested Amount', 'Est. Returns', 'Total Value');
       } else if (currentCalcType === 'lumpsum') {
         val1 = p;
         val3 = p * Math.pow(1 + r / 100, t);
-        val2 = val3 - val1;
-        setResultLabels('Invested amount', 'Est. returns', 'Total value');
+        val2 = Math.max(0, val3 - val1);
+        setResultLabels('Invested Amount', 'Est. Returns', 'Total Value');
       } else if (currentCalcType === 'emi') {
         const i = r / 12 / 100;
         const n = t * 12;
         const emi = i > 0 ? (p * i * Math.pow(1 + i, n)) / (Math.pow(1 + i, n) - 1) : p / n;
         val1 = p;
         val3 = emi * n;
-        val2 = val3 - val1;
-        setResultLabels('Principal amount', 'Total interest', 'Total payable (EMI: ' + formatINR(emi) + ')');
+        val2 = Math.max(0, val3 - val1);
+        setResultLabels('Principal Amount', 'Total Interest', 'Total Payable (EMI: ' + formatINR(emi) + ')');
       } else if (currentCalcType === 'swp') {
         val1 = p;
         val2 = r * t * 12;
         val3 = Math.max(0, p * Math.pow(1.08, t) - val2);
-        setResultLabels('Total investment', 'Total withdrawal', 'Final value');
+        setResultLabels('Total Investment', 'Total Withdrawal', 'Final Value');
       } else if (currentCalcType === 'gst') {
         val1 = p * t;
         val2 = (val1 * r) / 100;
         val3 = val1 + val2;
-        setResultLabels('Net amount', 'Tax / Margin', 'Total amount');
+        setResultLabels('Net Amount', 'Tax / Margin', 'Total Amount');
       } else {
         val1 = p;
         val2 = (p * r * t) / 100;
         val3 = val1 + val2;
-        setResultLabels('Principal amount', 'Total interest', 'Total value');
+        setResultLabels('Principal Amount', 'Total Interest', 'Total Value');
       }
 
       document.getElementById('resVal1').innerText = formatINR(val1);
@@ -876,7 +876,7 @@
       try {
         const num = parseFloat(document.getElementById('sciScreen').value) || 0;
         let res = 0;
-        const rad = (num * Math.PI) / 180; // Degree mode
+        const rad = (num * Math.PI) / 180;
         if (fn === 'sin') res = Math.sin(rad);
         if (fn === 'cos') res = Math.cos(rad);
         if (fn === 'tan') res = Math.tan(rad);
@@ -904,4 +904,4 @@
     initLayer1();
   </script>
 </body>
-              </html>
+  </html>
