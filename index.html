@@ -194,6 +194,6 @@ if(s.replace(/sin|cos|tan|log|ln|sqrt|pi|e/g,'').replace(/[0-9+\-*/().\s]/g,''))
 const r=new Function('sin','cos','tan','log','ln','sqrt','pi','e','"use strict";return ('+s+')')(x=>Math.sin(d(x)),x=>Math.cos(d(x)),x=>Math.tan(d(x)),Math.log10,Math.log,Math.sqrt,Math.PI,Math.E);
 if(!isFinite(r))throw 0;hist=ex+' =';ex=String(Number(r.toPrecision(12)))}catch(e){hist='';ex='';$('sx').textContent=t('Error|त्रुटि');return}$('sx').textContent=ex;$('sh').textContent=hist}
 const h0=location.hash.slice(1);if(C[h0])openCalc(h0,0);else render();
-</script>
-<script src="extras.js"></script>/body>
+<script src="extras.js"></script>
+</body>
 </html>
